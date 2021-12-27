@@ -1,2 +1,2 @@
 # HoldableSwipeHandler
-open source library for cute recyclerview
+open source library for holdable ViewHolder in RecyclerView
