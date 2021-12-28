@@ -1,9 +1,9 @@
 plugins {
     id 'com.android.library'
     id 'kotlin-android'
-    id 'com.github.dcendents.android-maven'
+    //id 'com.github.dcendents.android-maven'
 }
-group = 'com.github.yeon-kyu'
+//group = 'com.github.yeon-kyu'
 
 android {
     compileSdk 31
@@ -41,4 +41,6 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+
+    implementation "androidx.recyclerview:recyclerview:1.2.1"
 }
