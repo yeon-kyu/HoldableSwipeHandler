@@ -14,6 +14,9 @@ dependencies {
 ```
 ##### Latest Version : 1.0.4
 
+### Examples
+- comming soon
+
 ### How To Use in Activity/Fragment with RecyclerView
 ```kotlin
 val yourRecyclerView : RecyclerView
@@ -39,6 +42,10 @@ val itemTouchHelper = ItemTouchHelper(swipeHelper)
 itemTouchHelper.attachToRecyclerView(yourRecyclerview)
 ```
 
+### About this
+Currently, just one 'Holded' Button is supported, but I will manage to support two or more items in the future. 
+
+Any Feedback or PR would be appreciated. Thank you.
 
 ### License
 ```xml
