@@ -4,31 +4,44 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.*
 import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
 import android.util.TypedValue
 import android.view.MotionEvent
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 
-open class HoldableSwipeHelper(context: Context, private val buttonAction: ButtonAction) :
+open class HoldableSwipeHelper(context: Context, private val buttonAction: SwipeButtonAction) :
     ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
 
-    private val deleteSideMarginDp = 18f
-    private val deleteSideMargin = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, deleteSideMarginDp, context.resources.displayMetrics).toInt()
+    private val defaultItemSideMarginDp = 18f
+    private val itemSideMarginUnit = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, defaultItemSideMarginDp, context.resources.displayMetrics).toInt()
+    private var firstItemSideMargin = itemSideMarginUnit
 
-    private val deleteIcon = ContextCompat.getDrawable(context, R.drawable.ic_trash)!!
-    private val intrinsicWidth = deleteIcon.intrinsicWidth
-    private val intrinsicHeight = deleteIcon.intrinsicHeight
+    private var firstIcon = ContextCompat.getDrawable(context, R.drawable.ic_trash)!!
+    private val intrinsicWidth = firstIcon.intrinsicWidth
+    private val intrinsicHeight = firstIcon.intrinsicHeight
     private val background = ColorDrawable()
-    private val backgroundColor = Color.parseColor("#e45b78")
+    private var backgroundColor = Color.parseColor("#e45b78")
 
     private var currentDx = 0f
     private var rightWidth = 0
 
     private var currentViewHolder: RecyclerView.ViewHolder? = null
 
-    interface ButtonAction {
-        fun onClickDelete(position : Int)
+    //default value : 18f,
+    fun setFirstItemSideMarginDp(value: Float) {
+        firstItemSideMargin = itemSideMarginUnit * (value / defaultItemSideMarginDp).toInt()
+    }
+
+    //default Icon : delete icon
+    fun setFirstItemDrawable(drawable: Drawable) {
+        firstIcon = drawable
+    }
+
+    //default color : pink
+    fun setBackgroundColor(colorString : String) {
+        backgroundColor = Color.parseColor(colorString)
     }
 
     fun onDraw(canvas: Canvas) {
@@ -60,7 +73,7 @@ open class HoldableSwipeHelper(context: Context, private val buttonAction: Butto
         isCurrentlyActive: Boolean,
     ) {
         currentDx = dX
-        rightWidth = intrinsicWidth + 2 * deleteSideMargin
+        rightWidth = intrinsicWidth + 2 * firstItemSideMargin
 
         val isHolding = getViewHolderTag(viewHolder)
         val x = holdViewPositionHorizontal(dX, isHolding)
@@ -94,7 +107,7 @@ open class HoldableSwipeHelper(context: Context, private val buttonAction: Butto
     */
     override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
         currentViewHolder?.let {
-            addDeleteButtonClickListener(recyclerView, viewHolder)
+            addFirstItemClickListener(recyclerView, viewHolder)
         }
     }
 
@@ -123,14 +136,14 @@ open class HoldableSwipeHelper(context: Context, private val buttonAction: Butto
     }
 
     @SuppressLint("ClickableViewAccessibility")
-    private fun addDeleteButtonClickListener(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
+    private fun addFirstItemClickListener(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
         recyclerView.setOnTouchListener { _, event ->
             if (event.action == MotionEvent.ACTION_DOWN) {
-                if (deleteIcon.bounds.contains(event.x.toInt(), event.y.toInt())) {
+                if (firstIcon.bounds.contains(event.x.toInt(), event.y.toInt())) {
                     recyclerView.setOnTouchListener { _, event2 ->
                         if (event2.action == MotionEvent.ACTION_UP) {
-                            if (deleteIcon.bounds.contains(event2.x.toInt(), event2.y.toInt())) {
-                                buttonAction.onClickDelete(viewHolder.absoluteAdapterPosition)
+                            if (firstIcon.bounds.contains(event2.x.toInt(), event2.y.toInt())) {
+                                buttonAction.onClickFirstButton(viewHolder.absoluteAdapterPosition)
                             }
                         }
                         false
@@ -177,19 +190,19 @@ open class HoldableSwipeHelper(context: Context, private val buttonAction: Butto
         val itemView = viewHolder.itemView
         val itemHeight = itemView.bottom - itemView.top
 
-        // Draw the red delete background
+        // holding 되는 background 그린다
         background.color = backgroundColor
         background.setBounds(0 , itemView.top, itemView.right, itemView.bottom)
         background.draw(canvas)
 
-        // Calculate position of delete icon
-        val deleteIconTop = itemView.top + (itemHeight - intrinsicHeight) / 2
-        val deleteIconLeft = itemView.right - deleteSideMargin - intrinsicWidth
-        val deleteIconRight = itemView.right - deleteSideMargin
-        val deleteIconBottom = deleteIconTop + intrinsicHeight
+        // holding 되는 background 에서 버튼의 위치를 계산한다
+        val firstIconTop = itemView.top + (itemHeight - intrinsicHeight) / 2
+        val firstIconLeft = itemView.right - firstItemSideMargin - intrinsicWidth
+        val firstIconRight = itemView.right - firstItemSideMargin
+        val firstIconBottom = firstIconTop + intrinsicHeight
 
-        // Draw the delete icon
-        deleteIcon.setBounds(deleteIconLeft, deleteIconTop, deleteIconRight, deleteIconBottom)
-        deleteIcon.draw(canvas)
+        // holding 되는 background 에서 버튼을 그린다.
+        firstIcon.setBounds(firstIconLeft, firstIconTop, firstIconRight, firstIconBottom)
+        firstIcon.draw(canvas)
     }
 }
