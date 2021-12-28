@@ -155,7 +155,7 @@ open class HoldableSwipeHelper(context: Context, private val buttonAction: Swipe
         }
     }
 
-    fun addRecyclerviewDecoration(recyclerView: RecyclerView) {
+    fun addRecyclerViewDecoration(recyclerView: RecyclerView) {
         recyclerView.addItemDecoration(object : RecyclerView.ItemDecoration() {
             override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
                 currentViewHolder?.let {
