@@ -31,7 +31,7 @@ val swipeHelper = HoldableSwipeHelper(context, object : SwipeButtonAction {
 
 swipeHelper.apply {
   setBackgroundColor("#000000") // not necessary. default value is pink color 
-  setFirstItemDrawable(ContextCompat.getDrawable(this, R.drawable.ic_check)!!) // not necessary. default value is a 'trash can' icon
+  setFirstItemDrawable(ContextCompat.getDrawable(context, R.drawable.ic_check)!!) // not necessary. default value is a 'trash can' icon
   setFirstItemSideMarginDp(20) // not necessary. default value is 18. (in dip unit)
 }
 
