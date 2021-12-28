@@ -9,17 +9,17 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.yeon-kyu.HoldableSwipeHandler:HoldableSwipeHandler:1.0.2'
+    implementation 'com.github.yeon-kyu.HoldableSwipeHandler:HoldableSwipeHandler:1.0.4'
 }
 ```
-##### Latest Version : 1.0.2
+##### Latest Version : 1.0.4
 
 ### How To Use in Activity/Fragment with RecyclerView
 ```kotlin
 val yourRecyclerView : RecyclerView
 val yourAdapter : RecyclerView.Adapter or ListAdapter ..
 
-val swipeHelper = HoldableSwipeHelper(this, object : SwipeButtonAction {
+val swipeHelper = HoldableSwipeHelper(context, object : SwipeButtonAction {
   override fun onClickFirstButton(absoluteAdapterPosition: Int) {
     // do something if you want to get callback when 'holded' button is clicked
     viewModel.deleteNotification(yourAdapter.currentList[absoluteAdapterPosition].articleId)
@@ -34,16 +34,9 @@ swipeHelper.apply {
 
 // the codes bellow are necessary
 swipeHelper.addRecyclerViewListener(yourRecyclerview)
+swipeHelper.addRecyclerViewDecoration(yourRecyclerview)
 val itemTouchHelper = ItemTouchHelper(swipeHelper)
 itemTouchHelper.attachToRecyclerView(yourRecyclerview)
-yourRecyclerview.addItemDecoration(object : RecyclerView.ItemDecoration() {
-  override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
-      swipeHelper.onDraw(c)
-  }
-})
-
-  
-
 ```
 
 
