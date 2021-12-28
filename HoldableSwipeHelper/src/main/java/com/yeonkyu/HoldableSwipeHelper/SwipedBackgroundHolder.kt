@@ -4,15 +4,20 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.Drawable
 import android.util.TypedValue
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 
-class BackgroundHolder(context: Context) {
+class SwipedBackgroundHolder(context: Context) {
     private val defaultItemSideMarginDp = 18f
-    private val itemSideMarginUnit = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, defaultItemSideMarginDp, context.resources.displayMetrics).toInt()
+    private val itemSideMarginUnit =
+        TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP,
+            defaultItemSideMarginDp,
+            context.resources.displayMetrics
+        ).toInt()
+
     var firstItemSideMargin = itemSideMarginUnit
         set(value) {
             field = itemSideMarginUnit * (value / defaultItemSideMarginDp).toInt()
@@ -22,7 +27,7 @@ class BackgroundHolder(context: Context) {
     private val intrinsicWidth = firstIcon.intrinsicWidth
     private val intrinsicHeight = firstIcon.intrinsicHeight
 
-    var backgroundColor = Color.parseColor("#e45b78")
+    var backgroundColor = Color.parseColor("#e45b78") //pink color
     private val background = ColorDrawable()
 
     var holderWidth = 0

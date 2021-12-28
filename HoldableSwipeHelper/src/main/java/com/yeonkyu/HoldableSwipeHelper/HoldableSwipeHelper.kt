@@ -11,31 +11,23 @@ import androidx.recyclerview.widget.RecyclerView
 open class HoldableSwipeHelper(context: Context, private val buttonAction: SwipeButtonAction) :
     ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
 
-    private val backgroundHolder = BackgroundHolder(context)
+    private val swipedBackgroundHolder = SwipedBackgroundHolder(context)
     private var currentViewHolder: RecyclerView.ViewHolder? = null
     private var currentDx = 0f
 
-    //default value : 18f,
+    // default value : 18f,
     fun setFirstItemSideMarginDp(value: Int) {
-        backgroundHolder.firstItemSideMargin = value
+        swipedBackgroundHolder.firstItemSideMargin = value
     }
 
-    //default Icon : delete icon
+    // default Icon : delete icon
     fun setFirstItemDrawable(drawable: Drawable) {
-        backgroundHolder.firstIcon = drawable
+        swipedBackgroundHolder.firstIcon = drawable
     }
 
-    //default color : pink
+    // default color : pink
     fun setBackgroundColor(colorString : String) {
-        backgroundHolder.backgroundColor = Color.parseColor(colorString)
-    }
-
-    fun onDraw(canvas: Canvas) {
-        currentViewHolder?.let {
-            if (getViewHolderTag(it)) {
-                backgroundHolder.drawHoldingBackground(canvas, it)
-            }
-        }
+        swipedBackgroundHolder.backgroundColor = Color.parseColor(colorString)
     }
 
     override fun onMove(
@@ -48,7 +40,7 @@ open class HoldableSwipeHelper(context: Context, private val buttonAction: Swipe
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) { }
 
-    //recyclerview의 view가 반응하여 onDraw()할 때 콜백되는 함수
+    // recyclerview의 view가 반응하여 onDraw()할 때 콜백되는 함수
     override fun onChildDraw(
         canvas: Canvas,
         recyclerView: RecyclerView,
@@ -59,23 +51,23 @@ open class HoldableSwipeHelper(context: Context, private val buttonAction: Swipe
         isCurrentlyActive: Boolean,
     ) {
         currentDx = dX
-        backgroundHolder.updateHolderWidth()
+        swipedBackgroundHolder.updateHolderWidth()
 
         val isHolding = getViewHolderTag(viewHolder)
         val x = holdViewPositionHorizontal(dX, isHolding)
 
         viewHolder.itemView.translationX = x
 
-        backgroundHolder.drawHoldingBackground(canvas, viewHolder)
+        swipedBackgroundHolder.drawHoldingBackground(canvas, viewHolder)
         currentViewHolder = viewHolder
     }
 
     // swipe 해서 손을 떼었을 때 콜백된다.
     // setViewHolderTag()를 설정한다.
     override fun getSwipeThreshold(viewHolder: RecyclerView.ViewHolder): Float {
-        if(currentDx <= -backgroundHolder.holderWidth) {
+        if(currentDx <= -swipedBackgroundHolder.holderWidth) {
             setViewHolderTag(viewHolder, true)
-        } else { //정확히 currentDx가 rightWidth만큼 당겨져야하는지, 그 중간이 될지는 추가 논의필요
+        } else { // 정확히 currentDx가 rightWidth만큼 당겨져야하는지, 그 중간이 될지는 추가 논의필요
             setViewHolderTag(viewHolder, false)
         }
 
@@ -97,7 +89,7 @@ open class HoldableSwipeHelper(context: Context, private val buttonAction: Swipe
         }
     }
 
-    //holding 되어 화면에 걸쳐있으면 tag를 true로 둔다
+    // holding 되어 화면에 걸쳐있으면 tag를 true로 둔다
     private fun setViewHolderTag(viewHolder: RecyclerView.ViewHolder, isholding: Boolean) {
         viewHolder.itemView.tag = isholding
     }
@@ -110,11 +102,11 @@ open class HoldableSwipeHelper(context: Context, private val buttonAction: Swipe
         dX: Float,
         isHolding: Boolean
     ) : Float {
-        val min: Float = -backgroundHolder.holderWidth.toFloat()
+        val min: Float = -swipedBackgroundHolder.holderWidth.toFloat()
         val max = 0f
 
         val x = if (isHolding) {
-            dX - backgroundHolder.holderWidth
+            dX - swipedBackgroundHolder.holderWidth
         } else {
             dX
         }
@@ -125,10 +117,10 @@ open class HoldableSwipeHelper(context: Context, private val buttonAction: Swipe
     private fun addFirstItemClickListener(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
         recyclerView.setOnTouchListener { _, event ->
             if (event.action == MotionEvent.ACTION_DOWN) {
-                if (backgroundHolder.isFirstItemArea(event.x.toInt(), event.y.toInt())) {
+                if (swipedBackgroundHolder.isFirstItemArea(event.x.toInt(), event.y.toInt())) {
                     recyclerView.setOnTouchListener { _, event2 ->
                         if (event2.action == MotionEvent.ACTION_UP) {
-                            if (backgroundHolder.isFirstItemArea(event2.x.toInt(), event2.y.toInt())) {
+                            if (swipedBackgroundHolder.isFirstItemArea(event2.x.toInt(), event2.y.toInt())) {
                                 buttonAction.onClickFirstButton(viewHolder.absoluteAdapterPosition)
                             }
                         }
@@ -163,8 +155,20 @@ open class HoldableSwipeHelper(context: Context, private val buttonAction: Swipe
         }
     }
 
+    fun addRecyclerviewDecoration(recyclerView: RecyclerView) {
+        recyclerView.addItemDecoration(object : RecyclerView.ItemDecoration() {
+            override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
+                currentViewHolder?.let {
+                    if (getViewHolderTag(it)) {
+                        swipedBackgroundHolder.drawHoldingBackground(c, it)
+                    }
+                }
+            }
+        })
+    }
+
     private fun releaseCurrentViewHolder() {
-        //아이탬 holding 제거
+        // 현재 아이탬 holding 제거
         currentViewHolder?.apply {
             setViewHolderTag(this, false)
             itemView.animate().translationX(0f).duration = 300L
