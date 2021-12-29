@@ -150,9 +150,12 @@ open class HoldableSwipeHelper(context: Context, private val buttonAction: Swipe
             override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) { }
         })
 
-        recyclerView.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
-            releaseCurrentViewHolder()
-        }
+        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                releaseCurrentViewHolder()
+            }
+        })
     }
 
     fun addRecyclerViewDecoration(recyclerView: RecyclerView) {
