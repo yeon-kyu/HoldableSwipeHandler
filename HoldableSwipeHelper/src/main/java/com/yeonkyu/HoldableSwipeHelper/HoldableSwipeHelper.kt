@@ -5,6 +5,7 @@ import android.content.Context
 import android.graphics.*
 import android.graphics.drawable.Drawable
 import android.view.MotionEvent
+import androidx.annotation.ColorInt
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 
@@ -30,7 +31,7 @@ open class HoldableSwipeHelper(context: Context, private val buttonAction: Swipe
         swipedBackgroundHolder.backgroundColor = Color.parseColor(colorString)
     }
 
-    fun setBackgroundColor(color : Int) {
+    fun setBackgroundColor(@ColorInt color : Int) {
         swipedBackgroundHolder.backgroundColor = color
     }
 
