@@ -30,6 +30,10 @@ open class HoldableSwipeHelper(context: Context, private val buttonAction: Swipe
         swipedBackgroundHolder.backgroundColor = Color.parseColor(colorString)
     }
 
+    fun setBackgroundColor(color : Int) {
+        swipedBackgroundHolder.backgroundColor = color
+    }
+
     override fun onMove(
         recyclerView: RecyclerView,
         viewHolder: RecyclerView.ViewHolder,
