@@ -1,7 +1,10 @@
 # HoldableSwipeHandler
 Open Source Library for Holdable ViewHolder in RecyclerView
 
-### Gradle Setup
+## Gradle Setup
+
+[![](https://jitpack.io/v/yeon-kyu/HoldableSwipeHandler.svg)](https://jitpack.io/#yeon-kyu/HoldableSwipeHandler)
+
 
 ```gradle
 repositories {
@@ -12,12 +15,18 @@ dependencies {
     implementation 'com.github.yeon-kyu.HoldableSwipeHandler:HoldableSwipeHandler:1.0.4'
 }
 ```
-##### Latest Version : 1.0.4
+#### Latest Version : 1.0.4
 
-### Examples
-- comming soon
+## ScreenShot Examples
 
-### How To Use in Activity/Fragment with RecyclerView
+<p align="left">
+    <img src="https://github.com/yeon-kyu/HoldableSwipeHandler/blob/main/screenshots/iTunes_Gif.gif" width="30%"/>
+    🌴🌴
+    <img src="https://github.com/yeon-kyu/HoldableSwipeHandler/blob/main/screenshots/KuRing_Gif.gif" width="30%"/>
+    🌴🌴
+</p>
+
+## How To Use in Activity/Fragment with RecyclerView
 ```kotlin
 val yourRecyclerView : RecyclerView
 val yourAdapter : RecyclerView.Adapter or ListAdapter ..
@@ -42,12 +51,12 @@ val itemTouchHelper = ItemTouchHelper(swipeHelper)
 itemTouchHelper.attachToRecyclerView(yourRecyclerview)
 ```
 
-### About this
+## About
 Currently, just one 'Holded' Button is supported, but I will manage to support two or more items in the future. 
 
 Any Feedback or PR would be appreciated. Thank you.
 
-### License
+## License
 ```xml
 Designed and developed by 2021 yeon-kyu
 
