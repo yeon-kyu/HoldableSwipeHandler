@@ -40,19 +40,19 @@ class SwipedBackgroundHolder(context: Context) {
         return firstIcon.bounds.contains(x, y)
     }
 
-    fun drawHoldingBackground(canvas: Canvas, viewHolder: RecyclerView.ViewHolder) {
+    fun drawHoldingBackground(canvas: Canvas, viewHolder: RecyclerView.ViewHolder, x: Int) {
         val itemView = viewHolder.itemView
 
         // holding 되는 background 그린다
-        drawBackground(canvas, itemView)
+        drawBackground(canvas, itemView, x)
 
         // holding 되는 background 에서 버튼의 위치를 계산하고 그린다
         drawFirstItem(canvas, itemView)
     }
 
-    private fun drawBackground(canvas: Canvas, itemView: View) {
+    private fun drawBackground(canvas: Canvas, itemView: View, x: Int) {
         background.color = backgroundColor
-        background.setBounds(0 , itemView.top, itemView.right, itemView.bottom)
+        background.setBounds(itemView.right + x , itemView.top, itemView.right, itemView.bottom)
         background.draw(canvas)
     }
 

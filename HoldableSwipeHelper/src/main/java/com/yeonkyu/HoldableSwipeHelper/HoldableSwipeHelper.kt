@@ -63,7 +63,7 @@ open class HoldableSwipeHelper(context: Context, private val buttonAction: Swipe
 
         viewHolder.itemView.translationX = x
 
-        swipedBackgroundHolder.drawHoldingBackground(canvas, viewHolder)
+        swipedBackgroundHolder.drawHoldingBackground(canvas, viewHolder, x.toInt())
         currentViewHolder = viewHolder
     }
 
@@ -168,7 +168,9 @@ open class HoldableSwipeHelper(context: Context, private val buttonAction: Swipe
             override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
                 currentViewHolder?.let {
                     if (getViewHolderTag(it)) {
-                        swipedBackgroundHolder.drawHoldingBackground(c, it)
+                        swipedBackgroundHolder.run {
+                            drawHoldingBackground(c, it, holderWidth)
+                        }
                     }
                 }
             }
