@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/normal_screen"
+        android:icon="@drawable/ic_trash"
+        android:title="normal" />
+
+    <item
+        android:id="@+id/list_adapter_screen"
+        android:icon="@drawable/ic_trash"
+        android:title="list_adapter" />
+
+    <item
+        android:id="@+id/paging_screen"
+        android:icon="@drawable/ic_trash"
+        android:title="paging" />
+</menu>
