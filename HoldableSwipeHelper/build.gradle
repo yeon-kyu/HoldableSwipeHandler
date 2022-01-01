@@ -57,7 +57,7 @@ afterEvaluate {
                 from components.release
 
                 // You can then customize attributes of the publication as shown below.
-                groupId = 'com.yeonkyu.HoldableSwipeHandler'
+                groupId = 'com.yeonkyu'
                 artifactId = 'HoldableSwipeHandler'
                 version = '1.0'
             }
@@ -66,7 +66,7 @@ afterEvaluate {
                 // Applies the component for the debug build variant.
                 from components.debug
 
-                groupId = 'com.yeonkyu.HoldableSwipeHandler'
+                groupId = 'com.yeonkyu'
                 artifactId = 'HoldableSwipeHandler-debug'
                 version = '1.0'
             }
