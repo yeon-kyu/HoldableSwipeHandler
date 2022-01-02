@@ -14,7 +14,8 @@ open class HoldableSwipeHelper(context: Context, private val buttonAction: Swipe
 
     private val swipedBackgroundHolder = SwipedBackgroundHolder(context)
     private var currentViewHolder: RecyclerView.ViewHolder? = null
-    private var currentDx = 0f
+    private var absoluteDx = 0f
+    private var scopedX = 0f
 
     // default value : 18f,
     fun setFirstItemSideMarginDp(value: Int) {
@@ -27,11 +28,11 @@ open class HoldableSwipeHelper(context: Context, private val buttonAction: Swipe
     }
 
     // default color : pink
-    fun setBackgroundColor(colorString : String) {
+    fun setBackgroundColor(colorString: String) {
         swipedBackgroundHolder.backgroundColor = Color.parseColor(colorString)
     }
 
-    fun setBackgroundColor(@ColorInt color : Int) {
+    fun setBackgroundColor(@ColorInt color: Int) {
         swipedBackgroundHolder.backgroundColor = color
     }
 
@@ -55,22 +56,22 @@ open class HoldableSwipeHelper(context: Context, private val buttonAction: Swipe
         actionState: Int,
         isCurrentlyActive: Boolean,
     ) {
-        currentDx = dX
+        absoluteDx = dX
         swipedBackgroundHolder.updateHolderWidth()
 
         val isHolding = getViewHolderTag(viewHolder)
-        val x = holdViewPositionHorizontal(dX, isHolding)
+        scopedX = holdViewPositionHorizontal(dX, isHolding)
 
-        viewHolder.itemView.translationX = x
+        viewHolder.itemView.translationX = scopedX
 
-        swipedBackgroundHolder.drawHoldingBackground(canvas, viewHolder, x.toInt())
+        swipedBackgroundHolder.drawHoldingBackground(canvas, viewHolder, scopedX.toInt())
         currentViewHolder = viewHolder
     }
 
     // swipe 해서 손을 떼었을 때 콜백된다.
     // setViewHolderTag()를 설정한다.
     override fun getSwipeThreshold(viewHolder: RecyclerView.ViewHolder): Float {
-        if(currentDx <= -swipedBackgroundHolder.holderWidth) {
+        if (absoluteDx <= -swipedBackgroundHolder.holderWidth) {
             setViewHolderTag(viewHolder, true)
         } else { // 정확히 currentDx가 rightWidth만큼 당겨져야하는지, 그 중간이 될지는 추가 논의필요
             setViewHolderTag(viewHolder, false)
@@ -95,8 +96,8 @@ open class HoldableSwipeHelper(context: Context, private val buttonAction: Swipe
     }
 
     // holding 되어 화면에 걸쳐있으면 tag를 true로 둔다
-    private fun setViewHolderTag(viewHolder: RecyclerView.ViewHolder, isholding: Boolean) {
-        viewHolder.itemView.tag = isholding
+    private fun setViewHolderTag(viewHolder: RecyclerView.ViewHolder, isHolding: Boolean) {
+        viewHolder.itemView.tag = isHolding
     }
 
     private fun getViewHolderTag(viewHolder: RecyclerView.ViewHolder?) : Boolean {
@@ -106,7 +107,7 @@ open class HoldableSwipeHelper(context: Context, private val buttonAction: Swipe
     private fun holdViewPositionHorizontal(
         dX: Float,
         isHolding: Boolean
-    ) : Float {
+    ): Float {
         val min: Float = -swipedBackgroundHolder.holderWidth.toFloat()
         val max = 0f
 
@@ -144,7 +145,7 @@ open class HoldableSwipeHelper(context: Context, private val buttonAction: Swipe
                 if (e.action == MotionEvent.ACTION_DOWN) {
                     rv.findChildViewUnder(e.x, e.y)?.let {
                         val viewHolder = rv.getChildViewHolder(it)
-                        if(viewHolder.absoluteAdapterPosition != currentViewHolder?.absoluteAdapterPosition) {
+                        if (viewHolder.absoluteAdapterPosition != currentViewHolder?.absoluteAdapterPosition) {
                             releaseCurrentViewHolder()
                         }
                     }
@@ -169,7 +170,7 @@ open class HoldableSwipeHelper(context: Context, private val buttonAction: Swipe
                 currentViewHolder?.let {
                     if (getViewHolderTag(it)) {
                         swipedBackgroundHolder.run {
-                            drawHoldingBackground(c, it, -holderWidth)
+                            drawHoldingBackground(c, it, scopedX.toInt())
                         }
                     }
                 }
