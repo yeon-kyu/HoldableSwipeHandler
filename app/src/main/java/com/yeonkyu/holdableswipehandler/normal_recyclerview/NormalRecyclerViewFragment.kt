@@ -1,7 +1,6 @@
 package com.yeonkyu.holdableswipehandler.normal_recyclerview
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,16 +8,16 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.yeonkyu.holdableswipehandler.R
-import com.yeonkyu.holdableswipehandler.databinding.FragmentNormalRecyclerviewBinding
 import com.yeonkyu.holdableswipehandler.util.DataInitializer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.yeonkyu.HoldableSwipeHelper.HoldableSwipeHelper
 import com.yeonkyu.HoldableSwipeHelper.SwipeButtonAction
+import com.yeonkyu.holdableswipehandler.databinding.FragmentRecyclerviewBinding
 
 class NormalRecyclerViewFragment : Fragment() {
 
-    private lateinit var binding : FragmentNormalRecyclerviewBinding
+    private lateinit var binding : FragmentRecyclerviewBinding
     private lateinit var adapter : NormalAdapter
 
     override fun onCreateView(
@@ -26,7 +25,7 @@ class NormalRecyclerViewFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_normal_recyclerview, container, false)
+        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_recyclerview, container, false)
         binding.lifecycleOwner = activity
 
         setUpRecyclerView()
@@ -52,7 +51,5 @@ class NormalRecyclerViewFragment : Fragment() {
         itemTouchHelper.attachToRecyclerView(binding.recyclerView)
 
         binding.recyclerView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
-
-
     }
 }

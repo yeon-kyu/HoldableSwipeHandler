@@ -14,7 +14,7 @@ class ListAdapterRecyclerViewFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_list_adapter_recyclerview, container, false)
+        return inflater.inflate(R.layout.fragment_recyclerview, container, false)
     }
 
 }
