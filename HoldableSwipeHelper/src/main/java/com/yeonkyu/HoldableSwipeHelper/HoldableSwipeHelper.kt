@@ -169,7 +169,7 @@ open class HoldableSwipeHelper(context: Context, private val buttonAction: Swipe
                 currentViewHolder?.let {
                     if (getViewHolderTag(it)) {
                         swipedBackgroundHolder.run {
-                            drawHoldingBackground(c, it, holderWidth)
+                            drawHoldingBackground(c, it, -holderWidth)
                         }
                     }
                 }
