@@ -17,7 +17,9 @@ open class HoldableSwipeHelper(context: Context, private val buttonAction: Swipe
     private var absoluteDx = 0f
     private var scopedX = 0f
 
-    // default value : 18f,
+    private var firstItemDismissFlag = true
+
+    // default value : 18f
     fun setFirstItemSideMarginDp(value: Int) {
         swipedBackgroundHolder.firstItemSideMargin = value
     }
@@ -34,6 +36,10 @@ open class HoldableSwipeHelper(context: Context, private val buttonAction: Swipe
 
     fun setBackgroundColor(@ColorInt color: Int) {
         swipedBackgroundHolder.backgroundColor = color
+    }
+
+    fun setDismissBackgroundOnClickedFirstItem(value : Boolean) {
+        firstItemDismissFlag = value
     }
 
     override fun onMove(
@@ -128,6 +134,10 @@ open class HoldableSwipeHelper(context: Context, private val buttonAction: Swipe
                         if (event2.action == MotionEvent.ACTION_UP) {
                             if (swipedBackgroundHolder.isFirstItemArea(event2.x.toInt(), event2.y.toInt())) {
                                 buttonAction.onClickFirstButton(viewHolder.absoluteAdapterPosition)
+                                if (firstItemDismissFlag) {
+                                    releaseCurrentViewHolder()
+                                    swipedBackgroundHolder.dismissFirstItem()
+                                }
                             }
                         }
                         false

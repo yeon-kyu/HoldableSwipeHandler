@@ -69,4 +69,8 @@ class SwipedBackgroundHolder(context: Context) {
         firstIcon.setBounds(firstIconLeft, firstIconTop, firstIconRight, firstIconBottom)
         firstIcon.draw(canvas)
     }
+
+    fun dismissFirstItem() {
+        firstIcon.setBounds(0, 0, 0, 0)
+    }
 }
