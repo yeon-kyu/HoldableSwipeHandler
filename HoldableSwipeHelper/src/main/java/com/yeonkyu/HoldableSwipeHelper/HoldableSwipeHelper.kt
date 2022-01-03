@@ -92,20 +92,25 @@ open class HoldableSwipeHelper(context: Context, private val buttonAction: Swipe
 
     /*
     사용자 interaction이 끝났을때 호출됨(스와이프 등 포함)
-    하지만 clearView()는 onChildDraw()가 완전히 끝났을때 호출되기 때문에 여기서
-    setViewHolder() 세팅을하면 ui 적용이 안된다.
+    하지만 clearView()는 onChildDraw()가 거의 완전히 끝났을때 호출되기 때문에
+    여기서 setViewHolder() 세팅을하면 ui 적용이 안된다.
+    또한 getSwipeThreshold() 보다 늦게 호출된다.
     */
     override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
         currentViewHolder?.let {
-            addFirstItemClickListener(recyclerView, viewHolder)
+            if (getViewHolderTag(it)) {
+                addFirstItemClickListener(recyclerView, viewHolder)
+            }
+
         }
     }
 
-    // holding 되어 화면에 걸쳐있으면 tag를 true로 둔다
+    // holding 되어 화면에 걸쳐있으면 tag 를 true 로 둔다
     private fun setViewHolderTag(viewHolder: RecyclerView.ViewHolder, isHolding: Boolean) {
         viewHolder.itemView.tag = isHolding
     }
 
+    // 현재 인자로 받은 뷰홀더가 화면에 걸쳐있는지를 반환한다
     private fun getViewHolderTag(viewHolder: RecyclerView.ViewHolder?) : Boolean {
         return viewHolder?.itemView?.tag as? Boolean ?: false
     }
@@ -127,16 +132,20 @@ open class HoldableSwipeHelper(context: Context, private val buttonAction: Swipe
 
     @SuppressLint("ClickableViewAccessibility")
     private fun addFirstItemClickListener(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
-        recyclerView.setOnTouchListener { _, event ->
-            if (event.action == MotionEvent.ACTION_DOWN) {
-                if (swipedBackgroundHolder.isFirstItemArea(event.x.toInt(), event.y.toInt())) {
-                    recyclerView.setOnTouchListener { _, event2 ->
-                        if (event2.action == MotionEvent.ACTION_UP) {
-                            if (swipedBackgroundHolder.isFirstItemArea(event2.x.toInt(), event2.y.toInt())) {
-                                buttonAction.onClickFirstButton(viewHolder.absoluteAdapterPosition)
+        recyclerView.setOnTouchListener { _, downEvent ->
+            if (downEvent.action == MotionEvent.ACTION_DOWN) {
+                if (swipedBackgroundHolder.isFirstItemArea(downEvent.x.toInt(), downEvent.y.toInt())) {
+                    recyclerView.setOnTouchListener { _, upEvent ->
+                        if (upEvent.action == MotionEvent.ACTION_UP) {
+                            if (swipedBackgroundHolder.isFirstItemArea(upEvent.x.toInt(), upEvent.y.toInt())
+                                && getViewHolderTag(viewHolder)
+                            ) {
                                 if (firstItemDismissFlag) {
-                                    releaseCurrentViewHolder()
-                                    swipedBackgroundHolder.dismissFirstItem()
+                                    releaseCurrentViewHolderImmediately()
+                                }
+
+                                if (viewHolder.absoluteAdapterPosition >= 0) {
+                                    buttonAction.onClickFirstButton(viewHolder.absoluteAdapterPosition)
                                 }
                             }
                         }
@@ -186,6 +195,18 @@ open class HoldableSwipeHelper(context: Context, private val buttonAction: Swipe
                 }
             }
         })
+    }
+
+    /*
+     currentViewHolder 를 null 로 두면 recyclerView 의
+     ItemDecoration 의 onDraw()가 정상 로직 수행을 못한다
+     따라서 즉각 삭제되는 상황에서는 currentViewHolder 를 null 로 두지 않는다.
+     */
+    private fun releaseCurrentViewHolderImmediately() {
+        currentViewHolder?.apply {
+            setViewHolderTag(this, false)
+            itemView.translationX = 0f
+        }
     }
 
     private fun releaseCurrentViewHolder() {
