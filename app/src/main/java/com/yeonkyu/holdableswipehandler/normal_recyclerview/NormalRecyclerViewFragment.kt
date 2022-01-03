@@ -42,11 +42,16 @@ class NormalRecyclerViewFragment : Fragment() {
 
         val swipeHelper = HoldableSwipeHelper(requireContext(), object : SwipeButtonAction {
             override fun onClickFirstButton(absoluteAdapterPosition: Int) {
+                adapter.removePlayer(absoluteAdapterPosition)
+                //adapter.notifyDataSetChanged()
+                adapter.notifyItemRemoved(absoluteAdapterPosition)
+                adapter.notifyItemRangeChanged(absoluteAdapterPosition,adapter.itemCount)
 
             }
         })
         swipeHelper.addRecyclerViewListener(binding.recyclerView)
         swipeHelper.addRecyclerViewDecoration(binding.recyclerView)
+        swipeHelper.setDismissBackgroundOnClickedFirstItem(true)
         val itemTouchHelper = ItemTouchHelper(swipeHelper)
         itemTouchHelper.attachToRecyclerView(binding.recyclerView)
 

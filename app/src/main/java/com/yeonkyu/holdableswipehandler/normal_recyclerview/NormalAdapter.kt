@@ -17,6 +17,10 @@ class NormalAdapter : RecyclerView.Adapter<PlayerViewHolder>() {
         playerList = list
     }
 
+    fun removePlayer(position : Int) {
+        playerList.removeAt(position)
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlayerViewHolder {
         val binding: ItemPlayerBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_player,parent,false)
         return PlayerViewHolder(binding)
