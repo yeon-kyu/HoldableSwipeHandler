@@ -12,10 +12,10 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.yeon-kyu.HoldableSwipeHandler:HoldableSwipeHandler:1.0.82'
+    implementation 'com.github.yeon-kyu.HoldableSwipeHandler:HoldableSwipeHandler:1.1.0'
 }
 ```
-#### Latest Version : 1.0.82
+#### Latest Version : 1.1.0
 
 ## ScreenShot Examples
 
@@ -44,6 +44,13 @@ swipeHelper.apply {
   setFirstItemSideMarginDp(20) // not necessary. default value is 18. (in dip unit)
 }
 
+/*
+ if you want to maintain ViewHolder when clicked first Item, set False.
+ if you want to delete Item on the ViewHolder when clicked first Item, set True
+ default value is True
+*/
+swipeHelper.setDismissBackgroundOnClickedFirstItem(false)
+
 // the codes bellow are necessary
 swipeHelper.addRecyclerViewListener(yourRecyclerview)
 swipeHelper.addRecyclerViewDecoration(yourRecyclerview)
@@ -52,7 +59,7 @@ itemTouchHelper.attachToRecyclerView(yourRecyclerview)
 ```
 
 ## About
-Currently, just one 'Holded' Button is supported, but I will manage to support two or more items in the future. 
+Currently, just one 'Holded Button Item' is supported, but I will manage to support two or more items in the future. 
 
 Any Feedback or PR would be appreciated. Thank you.
 
