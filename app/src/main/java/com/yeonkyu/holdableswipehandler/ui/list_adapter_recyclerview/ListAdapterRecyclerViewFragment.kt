@@ -1,4 +1,4 @@
-package com.yeonkyu.holdableswipehandler.list_adapter_recyclerview
+package com.yeonkyu.holdableswipehandler.ui.list_adapter_recyclerview
 
 import android.os.Bundle
 import android.util.Log
@@ -15,7 +15,6 @@ import com.yeonkyu.HoldableSwipeHelper.SwipeButtonAction
 import com.yeonkyu.holdableswipehandler.R
 import com.yeonkyu.holdableswipehandler.data.Player
 import com.yeonkyu.holdableswipehandler.databinding.FragmentRecyclerviewBinding
-import com.yeonkyu.holdableswipehandler.normal_recyclerview.NormalAdapter
 import com.yeonkyu.holdableswipehandler.util.DataInitializer
 
 class ListAdapterRecyclerViewFragment : Fragment() {

@@ -1,4 +1,4 @@
-package com.yeonkyu.holdableswipehandler.paging3_recyclerview
+package com.yeonkyu.holdableswipehandler.ui.paging3_recyclerview
 
 import android.os.Bundle
 import android.view.LayoutInflater

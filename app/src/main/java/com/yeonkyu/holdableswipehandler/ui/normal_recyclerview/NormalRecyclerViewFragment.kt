@@ -1,4 +1,4 @@
-package com.yeonkyu.holdableswipehandler.normal_recyclerview
+package com.yeonkyu.holdableswipehandler.ui.normal_recyclerview
 
 import android.os.Bundle
 import android.view.LayoutInflater

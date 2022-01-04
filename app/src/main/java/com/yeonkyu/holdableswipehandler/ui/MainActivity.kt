@@ -1,4 +1,4 @@
-package com.yeonkyu.holdableswipehandler
+package com.yeonkyu.holdableswipehandler.ui
 
 import android.os.Bundle
 import android.view.MenuItem
@@ -6,13 +6,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
-import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.yeonkyu.holdableswipehandler.list_adapter_recyclerview.ListAdapterRecyclerViewFragment
-import com.yeonkyu.holdableswipehandler.normal_recyclerview.NormalRecyclerViewFragment
-import com.yeonkyu.holdableswipehandler.paging3_recyclerview.PagingRecyclerViewFragment
+import com.yeonkyu.holdableswipehandler.R
+import com.yeonkyu.holdableswipehandler.ui.list_adapter_recyclerview.ListAdapterRecyclerViewFragment
+import com.yeonkyu.holdableswipehandler.ui.normal_recyclerview.NormalRecyclerViewFragment
+import com.yeonkyu.holdableswipehandler.ui.paging3_recyclerview.PagingRecyclerViewFragment
 
 class MainActivity : AppCompatActivity() {
 
