@@ -29,8 +29,28 @@ class NormalRecyclerViewFragment : Fragment() {
         binding.lifecycleOwner = activity
 
         setUpRecyclerView()
+        setUpHoldableSwipeHandler()
 
         return binding.root
+    }
+
+    private fun setUpHoldableSwipeHandler() {
+        val swipeHelper = HoldableSwipeHelper(requireContext(), object : SwipeButtonAction {
+            override fun onClickFirstButton(absoluteAdapterPosition: Int) {
+                adapter.removePlayer(absoluteAdapterPosition)
+                //adapter.notifyDataSetChanged()
+                adapter.notifyItemRemoved(absoluteAdapterPosition)
+                adapter.notifyItemRangeChanged(absoluteAdapterPosition,adapter.itemCount)
+            }
+        })
+
+        swipeHelper.addRecyclerViewListener(binding.recyclerView)
+        swipeHelper.addRecyclerViewDecoration(binding.recyclerView)
+        swipeHelper.setDismissBackgroundOnClickedFirstItem(true)
+        val itemTouchHelper = ItemTouchHelper(swipeHelper)
+        itemTouchHelper.attachToRecyclerView(binding.recyclerView)
+
+        binding.recyclerView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
     }
 
     private fun setUpRecyclerView() {
@@ -39,22 +59,5 @@ class NormalRecyclerViewFragment : Fragment() {
             setPlayer(DataInitializer.initPlayer(requireContext()))
         }
         binding.recyclerView.adapter = adapter
-
-        val swipeHelper = HoldableSwipeHelper(requireContext(), object : SwipeButtonAction {
-            override fun onClickFirstButton(absoluteAdapterPosition: Int) {
-                adapter.removePlayer(absoluteAdapterPosition)
-                //adapter.notifyDataSetChanged()
-                adapter.notifyItemRemoved(absoluteAdapterPosition)
-                adapter.notifyItemRangeChanged(absoluteAdapterPosition,adapter.itemCount)
-
-            }
-        })
-        swipeHelper.addRecyclerViewListener(binding.recyclerView)
-        swipeHelper.addRecyclerViewDecoration(binding.recyclerView)
-        swipeHelper.setDismissBackgroundOnClickedFirstItem(true)
-        val itemTouchHelper = ItemTouchHelper(swipeHelper)
-        itemTouchHelper.attachToRecyclerView(binding.recyclerView)
-
-        binding.recyclerView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
     }
 }
