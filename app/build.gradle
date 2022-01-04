@@ -49,4 +49,8 @@ dependencies {
 
     // viewpager2
     implementation "androidx.viewpager2:viewpager2:1.0.0"
+
+    // pager3
+    def paging_version = "3.1.0"
+    implementation "androidx.paging:paging-runtime-ktx:$paging_version"
 }

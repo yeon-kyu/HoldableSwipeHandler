@@ -8,7 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.yeonkyu.holdableswipehandler.R
-import com.yeonkyu.holdableswipehandler.util.DataInitializer
+import com.yeonkyu.holdableswipehandler.util.DataLoader
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.yeonkyu.HoldableSwipeHelper.HoldableSwipeHelper
@@ -56,7 +56,7 @@ class NormalRecyclerViewFragment : Fragment() {
     private fun setUpRecyclerView() {
         binding.recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         adapter = NormalAdapter().apply {
-            setPlayer(DataInitializer.initPlayer(requireContext()))
+            setPlayer(DataLoader.initPlayer(requireContext()))
         }
         binding.recyclerView.adapter = adapter
     }

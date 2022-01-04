@@ -1,7 +1,6 @@
 package com.yeonkyu.holdableswipehandler.ui.list_adapter_recyclerview
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +14,7 @@ import com.yeonkyu.HoldableSwipeHelper.SwipeButtonAction
 import com.yeonkyu.holdableswipehandler.R
 import com.yeonkyu.holdableswipehandler.data.Player
 import com.yeonkyu.holdableswipehandler.databinding.FragmentRecyclerviewBinding
-import com.yeonkyu.holdableswipehandler.util.DataInitializer
+import com.yeonkyu.holdableswipehandler.util.DataLoader
 
 class ListAdapterRecyclerViewFragment : Fragment() {
 
@@ -32,7 +31,7 @@ class ListAdapterRecyclerViewFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_recyclerview, container, false)
         binding.lifecycleOwner = activity
 
-        playerList = DataInitializer.initPlayer(requireContext())
+        playerList = DataLoader.initPlayer(requireContext())
 
         setUpRecyclerView()
         setUpHoldableSwipeHandler()
@@ -40,10 +39,17 @@ class ListAdapterRecyclerViewFragment : Fragment() {
         return binding.root
     }
 
+    private fun setUpRecyclerView() {
+        binding.recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        adapter = MyListAdapter()
+        adapter.submitList(playerList.toList())
+
+        binding.recyclerView.adapter = adapter
+    }
+
     private fun setUpHoldableSwipeHandler() {
         val swipeHelper = HoldableSwipeHelper(requireContext(), object : SwipeButtonAction {
             override fun onClickFirstButton(absoluteAdapterPosition: Int) {
-                Log.e("onClickFirstButton", "absolutePosition : $absoluteAdapterPosition")
                 playerList.removeAt(absoluteAdapterPosition)
                 adapter.submitList(playerList.toList()) // .toList()를 빼면 ListAdapter가 변경사항을 캐치할 수 없다
             }
@@ -56,13 +62,5 @@ class ListAdapterRecyclerViewFragment : Fragment() {
         itemTouchHelper.attachToRecyclerView(binding.recyclerView)
 
         binding.recyclerView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
-    }
-
-    private fun setUpRecyclerView() {
-        binding.recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        adapter = MyListAdapter()
-        adapter.submitList(playerList.toList())
-
-        binding.recyclerView.adapter = adapter
     }
 }
