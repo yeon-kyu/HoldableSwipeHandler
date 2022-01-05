@@ -1,4 +1,4 @@
-package com.yeonkyu.holdableswipehandler
+package com.yeonkyu.holdableswipehandler.ui
 
 import androidx.recyclerview.widget.RecyclerView
 import com.yeonkyu.holdableswipehandler.data.Player

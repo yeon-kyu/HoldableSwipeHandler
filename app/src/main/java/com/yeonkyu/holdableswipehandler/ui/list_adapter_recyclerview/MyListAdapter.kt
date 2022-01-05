@@ -3,9 +3,8 @@ package com.yeonkyu.holdableswipehandler.ui.list_adapter_recyclerview
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import com.yeonkyu.holdableswipehandler.PlayerViewHolder
+import com.yeonkyu.holdableswipehandler.ui.PlayerViewHolder
 import com.yeonkyu.holdableswipehandler.R
 import com.yeonkyu.holdableswipehandler.data.Player
 import com.yeonkyu.holdableswipehandler.databinding.ItemPlayerBinding

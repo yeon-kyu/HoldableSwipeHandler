@@ -50,7 +50,7 @@ open class HoldableSwipeHelper(context: Context, private val buttonAction: Swipe
         return false
     }
 
-    override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) { }
+    override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) = Unit
 
     // recyclerview의 view가 반응하여 onDraw()할 때 콜백되는 함수
     override fun onChildDraw(
@@ -171,8 +171,9 @@ open class HoldableSwipeHelper(context: Context, private val buttonAction: Swipe
                 }
                 return false
             }
-            override fun onTouchEvent(rv: RecyclerView, e: MotionEvent) { }
-            override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) { }
+
+            override fun onTouchEvent(rv: RecyclerView, e: MotionEvent) = Unit
+            override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) = Unit
         })
 
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {

@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.yeonkyu.holdableswipehandler.PlayerViewHolder
+import com.yeonkyu.holdableswipehandler.ui.PlayerViewHolder
 import com.yeonkyu.holdableswipehandler.R
 import com.yeonkyu.holdableswipehandler.data.Player
 import com.yeonkyu.holdableswipehandler.databinding.ItemPlayerBinding
