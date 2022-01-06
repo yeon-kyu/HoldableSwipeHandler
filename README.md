@@ -45,9 +45,9 @@ swipeHelper.apply {
 }
 
 /*
- if you want to maintain ViewHolder when clicked first Item, set False.
- if you want to delete Item on the ViewHolder when clicked first Item, set True
- default value is True
+ if you want to maintain ViewHolder when clicked first Item, set value as False.
+ if you want to remove Item on the ViewHolder when clicked first Item, set value as True.
+ default value is True.
 */
 swipeHelper.setDismissBackgroundOnClickedFirstItem(false)
 
