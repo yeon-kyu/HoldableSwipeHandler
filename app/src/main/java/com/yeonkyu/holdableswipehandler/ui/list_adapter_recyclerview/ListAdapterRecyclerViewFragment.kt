@@ -29,7 +29,7 @@ class ListAdapterRecyclerViewFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_recyclerview, container, false)
-        binding.lifecycleOwner = activity
+        binding.lifecycleOwner = this
 
         playerList = DataLoader.initPlayer(requireContext())
 

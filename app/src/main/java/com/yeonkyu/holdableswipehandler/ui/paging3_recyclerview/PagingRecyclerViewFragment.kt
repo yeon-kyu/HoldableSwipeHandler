@@ -34,7 +34,7 @@ class PagingRecyclerViewFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_recyclerview, container, false)
-        binding.lifecycleOwner = activity
+        binding.lifecycleOwner = this
 
         setUpRecyclerView()
         setUpHoldableSwipeHandler()
