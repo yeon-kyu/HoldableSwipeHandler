@@ -19,17 +19,17 @@ open class HoldableSwipeHelper(context: Context, private val buttonAction: Swipe
 
     private var firstItemDismissFlag = true
 
-    // default value : 18f
+    /** default value : 18f */
     fun setFirstItemSideMarginDp(value: Int) {
         swipedBackgroundHolder.firstItemSideMargin = value
     }
 
-    // default Icon : delete icon
+    /** default Icon : delete icon */
     fun setFirstItemDrawable(drawable: Drawable) {
         swipedBackgroundHolder.firstIcon = drawable
     }
 
-    // default color : pink
+    /** default color : pink */
     fun setBackgroundColor(colorString: String) {
         swipedBackgroundHolder.backgroundColor = Color.parseColor(colorString)
     }
@@ -52,7 +52,7 @@ open class HoldableSwipeHelper(context: Context, private val buttonAction: Swipe
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) = Unit
 
-    // recyclerview의 view가 반응하여 onDraw()할 때 콜백되는 함수
+    /** recyclerview의 view가 반응하여 onDraw()할 때 콜백되는 함수 */
     override fun onChildDraw(
         canvas: Canvas,
         recyclerView: RecyclerView,
@@ -74,8 +74,10 @@ open class HoldableSwipeHelper(context: Context, private val buttonAction: Swipe
         currentViewHolder = viewHolder
     }
 
-    // swipe 해서 손을 떼었을 때 콜백된다.
-    // setViewHolderTag()를 설정한다.
+    /**
+     * swipe 해서 손을 떼었을 때 콜백된다.
+     * setViewHolderTag()를 설정한다.
+     */
     override fun getSwipeThreshold(viewHolder: RecyclerView.ViewHolder): Float {
         if (absoluteDx <= -swipedBackgroundHolder.holderWidth) {
             setViewHolderTag(viewHolder, true)
@@ -90,12 +92,12 @@ open class HoldableSwipeHelper(context: Context, private val buttonAction: Swipe
         return 0f
     }
 
-    /*
-    사용자 interaction이 끝났을때 호출됨(스와이프 등 포함)
-    하지만 clearView()는 onChildDraw()가 거의 완전히 끝났을때 호출되기 때문에
-    여기서 setViewHolder() 세팅을하면 ui 적용이 안된다.
-    또한 getSwipeThreshold() 보다 늦게 호출된다.
-    */
+    /**
+     * 사용자 interaction이 끝났을때 호출됨(스와이프 등 포함)
+     * 하지만 clearView()는 onChildDraw()가 거의 완전히 끝났을때 호출되기 때문에
+     * 여기서 setViewHolder() 세팅을하면 ui 적용이 안된다.
+     * 또한 getSwipeThreshold() 보다 늦게 호출된다.
+     */
     override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
         currentViewHolder?.let {
             if (getViewHolderTag(it)) {
@@ -105,12 +107,12 @@ open class HoldableSwipeHelper(context: Context, private val buttonAction: Swipe
         }
     }
 
-    // holding 되어 화면에 걸쳐있으면 tag 를 true 로 둔다
+    /** holding 되어 화면에 걸쳐있으면 tag 를 true 로 둔다 */
     private fun setViewHolderTag(viewHolder: RecyclerView.ViewHolder, isHolding: Boolean) {
         viewHolder.itemView.tag = isHolding
     }
 
-    // 현재 인자로 받은 뷰홀더가 화면에 걸쳐있는지를 반환한다
+    /** 현재 인자로 받은 뷰홀더가 화면에 걸쳐있는지를 반환한다 */
     private fun getViewHolderTag(viewHolder: RecyclerView.ViewHolder?) : Boolean {
         return viewHolder?.itemView?.tag as? Boolean ?: false
     }
@@ -198,10 +200,10 @@ open class HoldableSwipeHelper(context: Context, private val buttonAction: Swipe
         })
     }
 
-    /*
-     currentViewHolder 를 null 로 두면 recyclerView 의
-     ItemDecoration 의 onDraw()가 정상 로직 수행을 못한다
-     따라서 즉각 삭제되는 상황에서는 currentViewHolder 를 null 로 두지 않는다.
+    /**
+     * currentViewHolder 를 null 로 두면 recyclerView 의
+     * ItemDecoration 의 onDraw()가 정상 로직 수행을 못한다
+     * 따라서 즉각 삭제되는 상황에서는 currentViewHolder 를 null 로 두지 않는다.
      */
     private fun releaseCurrentViewHolderImmediately() {
         currentViewHolder?.apply {

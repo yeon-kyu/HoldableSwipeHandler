@@ -43,10 +43,10 @@ class SwipedBackgroundHolder(context: Context) {
     fun drawHoldingBackground(canvas: Canvas, viewHolder: RecyclerView.ViewHolder, x: Int) {
         val itemView = viewHolder.itemView
 
-        // holding 되는 background 그린다
+        /** holding 되는 background 그린다 */
         drawBackground(canvas, itemView, x)
 
-        // holding 되는 background 에서 버튼의 위치를 계산하고 그린다
+        /** holding 되는 background 에서 버튼의 위치를 계산하고 그린다 */
         drawFirstItem(canvas, itemView)
     }
 
@@ -59,13 +59,13 @@ class SwipedBackgroundHolder(context: Context) {
     private fun drawFirstItem(canvas: Canvas, itemView: View) {
         val itemHeight = itemView.bottom - itemView.top
 
-        // holding 되는 background 에서 버튼의 위치를 계산한다
+        /** holding 되는 background 에서 버튼의 위치를 계산한다 */
         val firstIconTop = itemView.top + (itemHeight - intrinsicHeight) / 2
         val firstIconLeft = itemView.right - firstItemSideMargin - intrinsicWidth
         val firstIconRight = itemView.right - firstItemSideMargin
         val firstIconBottom = firstIconTop + intrinsicHeight
 
-        // holding 되는 background 에서 버튼을 그린다.
+        /** holding 되는 background 에서 버튼을 그린다. */
         firstIcon.setBounds(firstIconLeft, firstIconTop, firstIconRight, firstIconBottom)
         firstIcon.draw(canvas)
     }
