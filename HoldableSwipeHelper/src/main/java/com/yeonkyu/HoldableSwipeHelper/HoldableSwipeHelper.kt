@@ -18,6 +18,7 @@ open class HoldableSwipeHelper(context: Context, private val buttonAction: Swipe
     private var scopedX = 0f
 
     private var firstItemDismissFlag = true
+    private val excludeViewTypeSet = mutableSetOf<Int>()
 
     /** default value : 18f */
     fun setFirstItemSideMarginDp(value: Int) {
@@ -36,6 +37,10 @@ open class HoldableSwipeHelper(context: Context, private val buttonAction: Swipe
 
     fun setBackgroundColor(@ColorInt color: Int) {
         swipedBackgroundHolder.backgroundColor = color
+    }
+    
+    fun excludeFromHoldableViewHolder(itemViewType: Int) {
+        excludeViewTypeSet.add(itemViewType)
     }
 
     fun setDismissBackgroundOnClickedFirstItem(value : Boolean) {
@@ -62,6 +67,9 @@ open class HoldableSwipeHelper(context: Context, private val buttonAction: Swipe
         actionState: Int,
         isCurrentlyActive: Boolean,
     ) {
+        if (excludeViewTypeSet.contains(viewHolder.itemViewType)) {
+            return
+        }
         absoluteDx = dX
         swipedBackgroundHolder.updateHolderWidth()
 
