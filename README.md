@@ -12,10 +12,10 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.yeon-kyu.HoldableSwipeHandler:HoldableSwipeHandler:1.1.0'
+    implementation 'com.github.yeon-kyu.HoldableSwipeHandler:HoldableSwipeHandler:1.1.1'
 }
 ```
-#### Latest Version : 1.1.0
+#### Latest Version : 1.1.1
 
 ## ScreenShot Examples
 
