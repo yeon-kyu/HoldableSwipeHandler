@@ -48,7 +48,7 @@ class ListAdapterRecyclerViewFragment : Fragment() {
 
     private fun setUpHoldableSwipeHandler() {
         HoldableSwipeHandler.Builder(requireContext())
-            //.setOnRecyclerView(binding.recyclerView)
+            .setOnRecyclerView(binding.recyclerView)
             .addSwipeButtonAction(object: SwipeButtonAction {
                 override fun onClickFirstButton(absoluteAdapterPosition: Int) {
                     playerList.removeAt(absoluteAdapterPosition)
