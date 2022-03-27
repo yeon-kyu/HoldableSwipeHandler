@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import java.lang.IllegalArgumentException
 
-open class HoldableSwipeHandler private constructor(builder: Builder) :
+class HoldableSwipeHandler private constructor(builder: Builder) :
     ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
     private var swipedBackgroundHolder: SwipedBackgroundHolder = builder.swipedBackgroundHolder
     private val buttonAction: SwipeButtonAction = builder.buttonAction!!
@@ -31,12 +31,12 @@ open class HoldableSwipeHandler private constructor(builder: Builder) :
     }
 
     class Builder(context: Context) {
-        val swipedBackgroundHolder = SwipedBackgroundHolder(context)
-        var buttonAction: SwipeButtonAction? = null
-        var recyclerView: RecyclerView? = null
+        internal val swipedBackgroundHolder = SwipedBackgroundHolder(context)
+        internal var buttonAction: SwipeButtonAction? = null
+        internal var recyclerView: RecyclerView? = null
 
-        var firstItemDismissFlag = true
-        val excludeViewTypeSet = mutableSetOf<Int>()
+        internal var firstItemDismissFlag = true
+        internal val excludeViewTypeSet = mutableSetOf<Int>()
 
         fun setSwipeButtonAction(swipeButtonAction: SwipeButtonAction) = this.apply {
             this.buttonAction = swipeButtonAction
