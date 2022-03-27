@@ -9,6 +9,7 @@ import android.view.MotionEvent
 import androidx.annotation.ColorInt
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import java.lang.IllegalArgumentException
 
 class HoldableSwipeHandler private constructor(builder: Builder) :
     ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
@@ -81,7 +82,12 @@ class HoldableSwipeHandler private constructor(builder: Builder) :
         }
 
         fun build(): HoldableSwipeHandler {
-            // buttonAction이 null일때 IllegalArguementException 발생
+            if (buttonAction == null) {
+                throw IllegalArgumentException("SwipeButtonAction should be implemented. Did you forget to call addSwipeButtonAction()?")
+            }
+            if (recyclerView == null) {
+                throw IllegalArgumentException("RecyclerView should be set to HoldableSwipeHandler. Did you forget to call setOnRecyclerView()?")
+            }
 
             return HoldableSwipeHandler(this)
         }
@@ -152,7 +158,6 @@ class HoldableSwipeHandler private constructor(builder: Builder) :
             if (getViewHolderTag(it)) {
                 addFirstItemClickListener(recyclerView, viewHolder)
             }
-
         }
     }
 
