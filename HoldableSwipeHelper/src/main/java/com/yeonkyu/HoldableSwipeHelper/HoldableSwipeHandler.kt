@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import java.lang.IllegalArgumentException
 
-class HoldableSwipeHandler private constructor(builder: Builder) :
+open class HoldableSwipeHandler private constructor(builder: Builder) :
     ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
     private var swipedBackgroundHolder: SwipedBackgroundHolder = builder.swipedBackgroundHolder
     private val buttonAction: SwipeButtonAction = builder.buttonAction!!
@@ -38,47 +38,39 @@ class HoldableSwipeHandler private constructor(builder: Builder) :
         var firstItemDismissFlag = true
         val excludeViewTypeSet = mutableSetOf<Int>()
 
-        fun addSwipeButtonAction(swipeButtonAction: SwipeButtonAction): Builder {
+        fun addSwipeButtonAction(swipeButtonAction: SwipeButtonAction) = this.apply {
             this.buttonAction = swipeButtonAction
-            return this
         }
 
-        fun setOnRecyclerView(recyclerView: RecyclerView): Builder {
+        fun setOnRecyclerView(recyclerView: RecyclerView) = this.apply {
             this.recyclerView = recyclerView
-            return this
         }
 
         /** default value : 18f */
-        fun setFirstItemSideMarginDp(value: Int): Builder {
+        fun setFirstItemSideMarginDp(value: Int) = this.apply {
             swipedBackgroundHolder.firstItemSideMargin = value
-            return this
         }
 
         /** default Icon : delete icon */
-        fun setFirstItemDrawable(drawable: Drawable): Builder {
+        fun setFirstItemDrawable(drawable: Drawable) = this.apply {
             swipedBackgroundHolder.firstIcon = drawable
-            return this
         }
 
         /** default color : pink */
-        fun setBackgroundColor(colorString: String): Builder {
+        fun setBackgroundColor(colorString: String) = this.apply {
             swipedBackgroundHolder.backgroundColor = Color.parseColor(colorString)
-            return this
         }
 
-        fun setBackgroundColor(@ColorInt color: Int): Builder {
+        fun setBackgroundColor(@ColorInt color: Int) = this.apply {
             swipedBackgroundHolder.backgroundColor = color
-            return this
         }
 
-        fun excludeFromHoldableViewHolder(itemViewType: Int): Builder {
+        fun excludeFromHoldableViewHolder(itemViewType: Int) = this.apply {
             this.excludeViewTypeSet.add(itemViewType)
-            return this
         }
 
-        fun setDismissOnClickFirstItem(value : Boolean): Builder {
+        fun setDismissOnClickFirstItem(value : Boolean) = this.apply {
             firstItemDismissFlag = value
-            return this
         }
 
         fun build(): HoldableSwipeHandler {
@@ -92,7 +84,6 @@ class HoldableSwipeHandler private constructor(builder: Builder) :
             return HoldableSwipeHandler(this)
         }
     }
-
 
     override fun onMove(
         recyclerView: RecyclerView,
