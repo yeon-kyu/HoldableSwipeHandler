@@ -2,58 +2,87 @@ package com.yeonkyu.HoldableSwipeHelper
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.*
+import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.view.MotionEvent
 import androidx.annotation.ColorInt
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import java.lang.IllegalArgumentException
 
-
-/** @deprecated */
-@Deprecated("Use HoldableSwipeHandler")
-open class HoldableSwipeHelper(context: Context, private val buttonAction: SwipeButtonAction) :
+open class HoldableSwipeHandler private constructor(builder: Builder) :
     ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+    private var swipedBackgroundHolder: SwipedBackgroundHolder = builder.swipedBackgroundHolder
+    private val buttonAction: SwipeButtonAction = builder.buttonAction!!
+    private var firstItemDismissFlag: Boolean = builder.firstItemDismissFlag
+    private val excludeViewTypeSet: Set<Int> = builder.excludeViewTypeSet
 
-    private val swipedBackgroundHolder = SwipedBackgroundHolder(context)
     private var currentViewHolder: RecyclerView.ViewHolder? = null
     private var absoluteDx = 0f
     private var scopedX = 0f
 
-    private var firstItemDismissFlag = true
-    private val excludeViewTypeSet = mutableSetOf<Int>()
+    init {
+        addRecyclerViewDecoration(builder.recyclerView!!)
+        addRecyclerViewListener(builder.recyclerView!!)
 
-    /** default value : 18f */
-    @Deprecated("Use HoldableSwipeHandler")
-    fun setFirstItemSideMarginDp(value: Int) {
-        swipedBackgroundHolder.firstItemSideMargin = value
+        val itemTouchHelper = ItemTouchHelper(this)
+        itemTouchHelper.attachToRecyclerView(builder.recyclerView!!)
     }
 
-    /** default Icon : delete icon */
-    @Deprecated("Use HoldableSwipeHandler")
-    fun setFirstItemDrawable(drawable: Drawable) {
-        swipedBackgroundHolder.firstIcon = drawable
-    }
+    class Builder(context: Context) {
+        val swipedBackgroundHolder = SwipedBackgroundHolder(context)
+        var buttonAction: SwipeButtonAction? = null
+        var recyclerView: RecyclerView? = null
 
-    /** default color : pink */
-    @Deprecated("Use HoldableSwipeHandler")
-    fun setBackgroundColor(colorString: String) {
-        swipedBackgroundHolder.backgroundColor = Color.parseColor(colorString)
-    }
+        var firstItemDismissFlag = true
+        val excludeViewTypeSet = mutableSetOf<Int>()
 
-    @Deprecated("Use HoldableSwipeHandler")
-    fun setBackgroundColor(@ColorInt color: Int) {
-        swipedBackgroundHolder.backgroundColor = color
-    }
+        fun setSwipeButtonAction(swipeButtonAction: SwipeButtonAction) = this.apply {
+            this.buttonAction = swipeButtonAction
+        }
 
-    @Deprecated("Use HoldableSwipeHandler")
-    fun excludeFromHoldableViewHolder(itemViewType: Int) {
-        excludeViewTypeSet.add(itemViewType)
-    }
+        fun setOnRecyclerView(recyclerView: RecyclerView) = this.apply {
+            this.recyclerView = recyclerView
+        }
 
-    @Deprecated("Use HoldableSwipeHandler")
-    fun setDismissBackgroundOnClickedFirstItem(value : Boolean) {
-        firstItemDismissFlag = value
+        /** default value : 18f */
+        fun setFirstItemSideMarginDp(value: Int) = this.apply {
+            swipedBackgroundHolder.firstItemSideMargin = value
+        }
+
+        /** default Icon : delete icon */
+        fun setFirstItemDrawable(drawable: Drawable) = this.apply {
+            swipedBackgroundHolder.firstIcon = drawable
+        }
+
+        /** default color : pink */
+        fun setBackgroundColor(colorString: String) = this.apply {
+            swipedBackgroundHolder.backgroundColor = Color.parseColor(colorString)
+        }
+
+        fun setBackgroundColor(@ColorInt color: Int) = this.apply {
+            swipedBackgroundHolder.backgroundColor = color
+        }
+
+        fun excludeFromHoldableViewHolder(itemViewType: Int) = this.apply {
+            this.excludeViewTypeSet.add(itemViewType)
+        }
+
+        fun setDismissOnClickFirstItem(value : Boolean) = this.apply {
+            firstItemDismissFlag = value
+        }
+
+        fun build(): HoldableSwipeHandler {
+            if (buttonAction == null) {
+                throw IllegalArgumentException("SwipeButtonAction should be implemented. Did you forget to call addSwipeButtonAction()?")
+            }
+            if (recyclerView == null) {
+                throw IllegalArgumentException("RecyclerView should be set to HoldableSwipeHandler. Did you forget to call setOnRecyclerView()?")
+            }
+
+            return HoldableSwipeHandler(this)
+        }
     }
 
     override fun onMove(
@@ -120,7 +149,6 @@ open class HoldableSwipeHelper(context: Context, private val buttonAction: Swipe
             if (getViewHolderTag(it)) {
                 addFirstItemClickListener(recyclerView, viewHolder)
             }
-
         }
     }
 
@@ -177,8 +205,7 @@ open class HoldableSwipeHelper(context: Context, private val buttonAction: Swipe
     }
 
     @SuppressLint("ClickableViewAccessibility")
-    @Deprecated("Use HoldableSwipeHandler")
-    fun addRecyclerViewListener(recyclerView: RecyclerView) {
+    private fun addRecyclerViewListener(recyclerView: RecyclerView) {
         recyclerView.addOnItemTouchListener(object : RecyclerView.OnItemTouchListener {
             override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
                 if (e.action == MotionEvent.ACTION_DOWN) {
@@ -204,8 +231,7 @@ open class HoldableSwipeHelper(context: Context, private val buttonAction: Swipe
         })
     }
 
-    @Deprecated("Use HoldableSwipeHandler")
-    fun addRecyclerViewDecoration(recyclerView: RecyclerView) {
+    private fun addRecyclerViewDecoration(recyclerView: RecyclerView) {
         recyclerView.addItemDecoration(object : RecyclerView.ItemDecoration() {
             override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
                 currentViewHolder?.let {
