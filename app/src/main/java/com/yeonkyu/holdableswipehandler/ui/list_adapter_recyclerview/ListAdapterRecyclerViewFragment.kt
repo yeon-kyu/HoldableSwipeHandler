@@ -49,7 +49,7 @@ class ListAdapterRecyclerViewFragment : Fragment() {
     private fun setUpHoldableSwipeHandler() {
         HoldableSwipeHandler.Builder(requireContext())
             .setOnRecyclerView(binding.recyclerView)
-            .addSwipeButtonAction(object: SwipeButtonAction {
+            .setSwipeButtonAction(object: SwipeButtonAction {
                 override fun onClickFirstButton(absoluteAdapterPosition: Int) {
                     playerList.removeAt(absoluteAdapterPosition)
                     adapter.submitList(playerList.toList()) // .toList()를 빼면 ListAdapter가 변경사항을 캐치할 수 없다
@@ -57,6 +57,7 @@ class ListAdapterRecyclerViewFragment : Fragment() {
             })
             .setDismissOnClickFirstItem(true)
             .excludeFromHoldableViewHolder(200)
+            .setBackgroundColor("#ff0000")
             .build()
 
         binding.recyclerView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))

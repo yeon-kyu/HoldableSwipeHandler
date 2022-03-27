@@ -38,7 +38,7 @@ open class HoldableSwipeHandler private constructor(builder: Builder) :
         var firstItemDismissFlag = true
         val excludeViewTypeSet = mutableSetOf<Int>()
 
-        fun addSwipeButtonAction(swipeButtonAction: SwipeButtonAction) = this.apply {
+        fun setSwipeButtonAction(swipeButtonAction: SwipeButtonAction) = this.apply {
             this.buttonAction = swipeButtonAction
         }
 
