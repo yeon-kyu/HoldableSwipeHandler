@@ -7,9 +7,8 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.yeonkyu.HoldableSwipeHelper.HoldableSwipeHelper
+import com.yeonkyu.HoldableSwipeHelper.HoldableSwipeHandler
 import com.yeonkyu.HoldableSwipeHelper.SwipeButtonAction
 import com.yeonkyu.holdableswipehandler.R
 import com.yeonkyu.holdableswipehandler.data.Player
@@ -48,18 +47,17 @@ class ListAdapterRecyclerViewFragment : Fragment() {
     }
 
     private fun setUpHoldableSwipeHandler() {
-        val swipeHelper = HoldableSwipeHelper(requireContext(), object : SwipeButtonAction {
-            override fun onClickFirstButton(absoluteAdapterPosition: Int) {
-                playerList.removeAt(absoluteAdapterPosition)
-                adapter.submitList(playerList.toList()) // .toList()를 빼면 ListAdapter가 변경사항을 캐치할 수 없다
-            }
-        })
-
-        swipeHelper.addRecyclerViewListener(binding.recyclerView)
-        swipeHelper.addRecyclerViewDecoration(binding.recyclerView)
-        swipeHelper.setDismissBackgroundOnClickedFirstItem(true)
-        val itemTouchHelper = ItemTouchHelper(swipeHelper)
-        itemTouchHelper.attachToRecyclerView(binding.recyclerView)
+        HoldableSwipeHandler.Builder(requireContext())
+            //.setOnRecyclerView(binding.recyclerView)
+            .addSwipeButtonAction(object: SwipeButtonAction {
+                override fun onClickFirstButton(absoluteAdapterPosition: Int) {
+                    playerList.removeAt(absoluteAdapterPosition)
+                    adapter.submitList(playerList.toList()) // .toList()를 빼면 ListAdapter가 변경사항을 캐치할 수 없다
+                }
+            })
+            .setDismissOnClickFirstItem(true)
+            .excludeFromHoldableViewHolder(200)
+            .build()
 
         binding.recyclerView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
     }
