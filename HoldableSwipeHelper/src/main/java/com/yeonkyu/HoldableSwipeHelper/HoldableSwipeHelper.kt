@@ -9,6 +9,9 @@ import androidx.annotation.ColorInt
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 
+
+/** @deprecated */
+@Deprecated("Use HoldableSwipeHandler")
 open class HoldableSwipeHelper(context: Context, private val buttonAction: SwipeButtonAction) :
     ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
 
@@ -21,28 +24,34 @@ open class HoldableSwipeHelper(context: Context, private val buttonAction: Swipe
     private val excludeViewTypeSet = mutableSetOf<Int>()
 
     /** default value : 18f */
+    @Deprecated("Use HoldableSwipeHandler")
     fun setFirstItemSideMarginDp(value: Int) {
         swipedBackgroundHolder.firstItemSideMargin = value
     }
 
     /** default Icon : delete icon */
+    @Deprecated("Use HoldableSwipeHandler")
     fun setFirstItemDrawable(drawable: Drawable) {
         swipedBackgroundHolder.firstIcon = drawable
     }
 
     /** default color : pink */
+    @Deprecated("Use HoldableSwipeHandler")
     fun setBackgroundColor(colorString: String) {
         swipedBackgroundHolder.backgroundColor = Color.parseColor(colorString)
     }
 
+    @Deprecated("Use HoldableSwipeHandler")
     fun setBackgroundColor(@ColorInt color: Int) {
         swipedBackgroundHolder.backgroundColor = color
     }
-    
+
+    @Deprecated("Use HoldableSwipeHandler")
     fun excludeFromHoldableViewHolder(itemViewType: Int) {
         excludeViewTypeSet.add(itemViewType)
     }
 
+    @Deprecated("Use HoldableSwipeHandler")
     fun setDismissBackgroundOnClickedFirstItem(value : Boolean) {
         firstItemDismissFlag = value
     }
@@ -168,6 +177,7 @@ open class HoldableSwipeHelper(context: Context, private val buttonAction: Swipe
     }
 
     @SuppressLint("ClickableViewAccessibility")
+    @Deprecated("Use HoldableSwipeHandler")
     fun addRecyclerViewListener(recyclerView: RecyclerView) {
         recyclerView.addOnItemTouchListener(object : RecyclerView.OnItemTouchListener {
             override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
@@ -194,6 +204,7 @@ open class HoldableSwipeHelper(context: Context, private val buttonAction: Swipe
         })
     }
 
+    @Deprecated("Use HoldableSwipeHandler")
     fun addRecyclerViewDecoration(recyclerView: RecyclerView) {
         recyclerView.addItemDecoration(object : RecyclerView.ItemDecoration() {
             override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
