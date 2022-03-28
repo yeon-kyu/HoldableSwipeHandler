@@ -12,10 +12,10 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.yeon-kyu.HoldableSwipeHandler:HoldableSwipeHandler:1.1.1'
+    implementation 'com.github.yeon-kyu.HoldableSwipeHandler:HoldableSwipeHandler:1.2.0'
 }
 ```
-#### Latest Version : 1.1.1
+#### Latest Version : 1.2.0
 
 ## ScreenShot Examples
 
@@ -31,35 +31,27 @@ dependencies {
 val yourRecyclerView : RecyclerView
 val yourAdapter : RecyclerView.Adapter or ListAdapter ..
 
-val swipeHelper = HoldableSwipeHelper(context, object : SwipeButtonAction {
-  override fun onClickFirstButton(absoluteAdapterPosition: Int) {
-    // do something if you want to get callback when 'holded' button is clicked
-    viewModel.deleteNotification(yourAdapter.currentList[absoluteAdapterPosition].articleId)
-  }
-})
-
-swipeHelper.apply {
-  setBackgroundColor("#000000") // not necessary. default value is pink color 
-  setFirstItemDrawable(ContextCompat.getDrawable(context, R.drawable.ic_check)!!) // not necessary. default value is a 'trash can' icon
-  setFirstItemSideMarginDp(20) // not necessary. default value is 18. (in dip unit)
-}
-
-/*
- if you want to maintain ViewHolder when clicked first Item, set value as False.
- if you want to remove Item on the ViewHolder when clicked first Item, set value as True.
- default value is True.
-*/
-swipeHelper.setDismissBackgroundOnClickedFirstItem(false)
-
-// the codes bellow are necessary
-swipeHelper.addRecyclerViewListener(yourRecyclerview)
-swipeHelper.addRecyclerViewDecoration(yourRecyclerview)
-val itemTouchHelper = ItemTouchHelper(swipeHelper)
-itemTouchHelper.attachToRecyclerView(yourRecyclerview)
+HoldableSwipeHandler.Builder(requireContext())
+    .setOnRecyclerView(binding.recyclerView) // mandatory.
+    .setSwipeButtonAction(object : SwipeButtonAction { // mandatory.
+        override fun onClickFirstButton(absoluteAdapterPosition: Int) {
+            playerList.removeAt(absoluteAdapterPosition)
+            adapter.submitList(playerList.toList())
+        }
+    })
+    .setBackgroundColor("#ff0000") // optional. default value is pink color
+    .setFirstItemDrawable(ContextCompat.getDrawable(context, R.drawable.ic_check)!!) // optional. default value is a 'trash can' icon
+    .setFirstItemSideMarginDp(20) // optional. default value is 18. (in dip unit)
+    .setDismissOnClickFirstItem(true) // optional. default value is true
+    .excludeFromHoldableViewHolder(10010) // optional. add ViewType that you want to exclude from holdable ViewHolder
+    .build()
 ```
 
-
 ## Version Updates
+### v.1.2.0
+  - 라이브러리를 Builder Pattern으로 변경
+    - 기존의 기능들은 이전 방식(자바빈즈 패턴)으로도 사용 가능하나 권장하지 않음
+
 ### v.1.1.1
   - 지정한 ItemViewType에는 Swipe 불가능하게 가능하도록 수정
     - excludeFromHoldableViewHolder() 이용 가능
