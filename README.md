@@ -28,21 +28,21 @@ dependencies {
 
 ## How To Use in Activity/Fragment with RecyclerView
 ```kotlin
-val yourRecyclerView : RecyclerView
-val yourAdapter : RecyclerView.Adapter or ListAdapter ..
+val yourRecyclerView: RecyclerView
+val yourAdapter: RecyclerView.Adapter or ListAdapter ..
 
 HoldableSwipeHandler.Builder(requireContext())
-    .setOnRecyclerView(binding.recyclerView) // mandatory.
+    .setOnRecyclerView(yourRecyclerView) // mandatory.
     .setSwipeButtonAction(object : SwipeButtonAction { // mandatory.
         override fun onClickFirstButton(absoluteAdapterPosition: Int) {
-            playerList.removeAt(absoluteAdapterPosition)
-            adapter.submitList(playerList.toList())
+            val item = yourAdapter.currentList[absoluteAdapterPosition]
+            viewModel.deletePushDB(item.articleId) // this is an example.
         }
     })
     .setBackgroundColor("#ff0000") // optional. default value is pink color
     .setFirstItemDrawable(ContextCompat.getDrawable(context, R.drawable.ic_check)!!) // optional. default value is a 'trash can' icon
     .setFirstItemSideMarginDp(20) // optional. default value is 18. (in dip unit)
-    .setDismissOnClickFirstItem(true) // optional. default value is true
+    .setDismissOnClickFirstItem(true) // optional. default value is 'true'
     .excludeFromHoldableViewHolder(10010) // optional. add ViewType that you want to exclude from holdable ViewHolder
     .build()
 ```
