@@ -11,7 +11,7 @@ import com.yeonkyu.holdableswipehandler.R
 import com.yeonkyu.holdableswipehandler.util.DataLoader
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
-import com.yeonkyu.HoldableSwipeHelper.HoldableSwipeHelper
+import com.yeonkyu.HoldableSwipeHelper.deprecated.HoldableSwipeHelper
 import com.yeonkyu.HoldableSwipeHelper.SwipeButtonAction
 import com.yeonkyu.holdableswipehandler.databinding.FragmentRecyclerviewBinding
 

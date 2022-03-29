@@ -1,4 +1,4 @@
-package com.yeonkyu.HoldableSwipeHelper
+package com.yeonkyu.HoldableSwipeHelper.deprecated
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -8,6 +8,8 @@ import android.view.MotionEvent
 import androidx.annotation.ColorInt
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.yeonkyu.HoldableSwipeHelper.SwipeButtonAction
+import com.yeonkyu.HoldableSwipeHelper.SwipedBackgroundHolder
 
 
 /** @deprecated */
