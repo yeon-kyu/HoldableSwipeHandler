@@ -11,10 +11,10 @@ import com.yeonkyu.holdableswipehandler.databinding.ItemPlayerBinding
 
 class NormalAdapter : RecyclerView.Adapter<PlayerViewHolder>() {
 
-    private lateinit var playerList : ArrayList<Player>
+    private lateinit var playerList : MutableList<Player>
 
-    fun setPlayer(list : ArrayList<Player>) {
-        playerList = list
+    fun setPlayer(list : List<Player>) {
+        playerList = list.toMutableList()
     }
 
     fun removePlayer(position : Int) {

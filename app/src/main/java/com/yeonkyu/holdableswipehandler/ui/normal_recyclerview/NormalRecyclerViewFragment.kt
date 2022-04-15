@@ -13,12 +13,15 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.yeonkyu.HoldableSwipeHelper.deprecated.HoldableSwipeHelper
 import com.yeonkyu.HoldableSwipeHelper.SwipeButtonAction
+import com.yeonkyu.holdableswipehandler.data.Player
 import com.yeonkyu.holdableswipehandler.databinding.FragmentRecyclerviewBinding
 
 class NormalRecyclerViewFragment : Fragment() {
 
     private lateinit var binding : FragmentRecyclerviewBinding
     private lateinit var adapter : NormalAdapter
+
+    private lateinit var playerList : List<Player>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,6 +30,8 @@ class NormalRecyclerViewFragment : Fragment() {
     ): View? {
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_recyclerview, container, false)
         binding.lifecycleOwner = this
+
+        playerList = DataLoader.initPlayer(requireContext()).toList()
 
         setUpRecyclerView()
         setUpHoldableSwipeHandler()
@@ -38,9 +43,8 @@ class NormalRecyclerViewFragment : Fragment() {
         val swipeHelper = HoldableSwipeHelper(requireContext(), object : SwipeButtonAction {
             override fun onClickFirstButton(absoluteAdapterPosition: Int) {
                 adapter.removePlayer(absoluteAdapterPosition)
-                //adapter.notifyDataSetChanged()
                 adapter.notifyItemRemoved(absoluteAdapterPosition)
-                adapter.notifyItemRangeChanged(absoluteAdapterPosition,adapter.itemCount)
+                adapter.notifyItemRangeChanged(absoluteAdapterPosition, adapter.itemCount)
             }
         })
 
@@ -56,7 +60,7 @@ class NormalRecyclerViewFragment : Fragment() {
     private fun setUpRecyclerView() {
         binding.recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         adapter = NormalAdapter().apply {
-            setPlayer(DataLoader.initPlayer(requireContext()))
+            setPlayer(playerList)
         }
         binding.recyclerView.adapter = adapter
     }

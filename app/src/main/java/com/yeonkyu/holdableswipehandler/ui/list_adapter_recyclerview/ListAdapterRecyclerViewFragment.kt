@@ -20,7 +20,7 @@ class ListAdapterRecyclerViewFragment : Fragment() {
     private lateinit var binding : FragmentRecyclerviewBinding
     private lateinit var adapter : MyListAdapter
 
-    private lateinit var playerList : ArrayList<Player>
+    private lateinit var playerList : MutableList<Player>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,7 +30,7 @@ class ListAdapterRecyclerViewFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_recyclerview, container, false)
         binding.lifecycleOwner = this
 
-        playerList = DataLoader.initPlayer(requireContext())
+        playerList = DataLoader.initPlayer(requireContext()).toMutableList()
 
         setUpRecyclerView()
         setUpHoldableSwipeHandler()
