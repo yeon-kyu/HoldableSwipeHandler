@@ -49,7 +49,7 @@ HoldableSwipeHandler.Builder(requireContext())
 
 ## Version Updates
 ### v.1.2.0
-  - 라이브러리를 Builder Pattern으로 변경
+  - 라이브러리를 Builder Pattern으로 리팩토링
     - 기존의 기능들은 이전 방식(자바빈즈 패턴)으로도 사용 가능하나 권장하지 않음
 
 ### v.1.1.1
@@ -62,10 +62,10 @@ HoldableSwipeHandler.Builder(requireContext())
     - 아이템 삭제되는 도중에 HoldingBackground가 종종 남아있는 버그 수정
     - 뷰홀더 배경이 투명한 경우에서의 UI 버그 수정(남아있는 투명 클릭 리스너 이슈)
     - 뷰홀더 자체의 클릭 리스너가 없는 경우에서의 버그 처리
-  - 안정적인 버전
+  - 안정적인 버전 시작
 
 ### v.1.0.10
-  - Holding 된 뷰홀더가 삭제되고 나서 해당 뷰홀더가 재활용될 때 transitionX가 원복되지 않았던 이슈 수정
+  - Holding 된 뷰홀더가 삭제되고 나서 해당 뷰홀더가 재활용될 때 translationX가 원복되지 않았던 이슈 수정
 
 ### v.1.0.9
   - HoldingBackground 의 버튼 클릭시 아이템을 사라지게 하는지에 대한 옵션
