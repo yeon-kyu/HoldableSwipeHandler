@@ -75,11 +75,6 @@ HoldableSwipeHandler.Builder(requireContext())
 ### v.1.0.8
   - 뷰홀더의 background가 투명한 경우 UI 버그 수정(뷰홀더 침범 이슈)
 
-## About
-Currently, just one 'Holded Button Item' is supported, but I will manage to support two or more items in the future. 
-
-Any Feedback or PR would be appreciated. Thank you.
-
 ## License
 ```xml
 Designed and developed by 2021 yeon-kyu
