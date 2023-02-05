@@ -15,7 +15,7 @@ dependencies {
     implementation 'com.github.yeon-kyu.HoldableSwipeHandler:HoldableSwipeHandler:1.2.0'
 }
 ```
-#### Latest Version : 1.2.0
+#### Latest Version : 1.2.2
 
 ## ScreenShot Examples
 
@@ -48,9 +48,9 @@ HoldableSwipeHandler.Builder(requireContext())
 ```
 
 ## Version Updates
-### v.1.2.1
+### v.1.2.2
   - 왼쪽 -> 오른쪽 스와이프도 가능하도록 변경
-    - setDirectionAsLeftToRight() 파라미터에 false를 넣어서 적용 가능 (default값 : true)
+    - setDirectionAsRightToLeft() 파라미터에 false를 넣어서 적용 가능 (default값 : true)
 
 ### v.1.2.0
   - 라이브러리를 Builder Pattern으로 리팩토링
