@@ -58,7 +58,7 @@ class ListAdapterRecyclerViewFragment : Fragment() {
             .setDismissOnClickFirstItem(true)
             .excludeFromHoldableViewHolder(200)
             .setBackgroundColor("#ff0000")
-            .setDirectionAsLeftToRight(false)
+            .setDirectionAsRightToLeft(false)
             .build()
 
         binding.recyclerView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))

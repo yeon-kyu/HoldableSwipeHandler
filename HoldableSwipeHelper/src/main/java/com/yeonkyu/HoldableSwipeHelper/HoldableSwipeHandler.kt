@@ -17,7 +17,7 @@ class HoldableSwipeHandler private constructor(builder: Builder) :
     private val buttonAction: SwipeButtonAction = builder.buttonAction!!
     private var firstItemDismissFlag: Boolean = builder.firstItemDismissFlag
     private val excludeViewTypeSet: Set<Int> = builder.excludeViewTypeSet
-    private var isLeftToRight: Boolean = builder.isLeftToRight
+    private var isRightToLeft: Boolean = builder.isRightToLeft
 
     private var currentViewHolder: RecyclerView.ViewHolder? = null
     private var absoluteDx = 0f
@@ -38,7 +38,7 @@ class HoldableSwipeHandler private constructor(builder: Builder) :
 
         internal var firstItemDismissFlag = true
         internal val excludeViewTypeSet = mutableSetOf<Int>()
-        internal var isLeftToRight = true
+        internal var isRightToLeft = true
 
         fun setSwipeButtonAction(swipeButtonAction: SwipeButtonAction) = this.apply {
             this.buttonAction = swipeButtonAction
@@ -75,8 +75,8 @@ class HoldableSwipeHandler private constructor(builder: Builder) :
             firstItemDismissFlag = value
         }
 
-        fun setDirectionAsLeftToRight(value: Boolean) = this.apply {
-            isLeftToRight = value
+        fun setDirectionAsRightToLeft(value: Boolean) = this.apply {
+            isRightToLeft = value
         }
 
         fun build(): HoldableSwipeHandler {
@@ -122,7 +122,7 @@ class HoldableSwipeHandler private constructor(builder: Builder) :
 
         viewHolder.itemView.translationX = scopedX
 
-        swipedBackgroundHolder.drawHoldingBackground(canvas, viewHolder, scopedX.toInt(), isLeftToRight)
+        swipedBackgroundHolder.drawHoldingBackground(canvas, viewHolder, scopedX.toInt(), isRightToLeft)
         currentViewHolder = viewHolder
     }
 
@@ -131,7 +131,7 @@ class HoldableSwipeHandler private constructor(builder: Builder) :
      * setViewHolderTag()를 설정한다.
      */
     override fun getSwipeThreshold(viewHolder: RecyclerView.ViewHolder): Float {
-        val shouldHold = if (isLeftToRight) {
+        val shouldHold = if (isRightToLeft) {
             absoluteDx <= -swipedBackgroundHolder.holderWidth
         } else {
             absoluteDx >= swipedBackgroundHolder.holderWidth
@@ -173,7 +173,7 @@ class HoldableSwipeHandler private constructor(builder: Builder) :
         dX: Float,
         isHolding: Boolean
     ): Float {
-        if (isLeftToRight) {
+        if (isRightToLeft) {
             val min: Float = -swipedBackgroundHolder.holderWidth.toFloat()
             val max = 0f
             val x = if (isHolding) {
@@ -255,7 +255,7 @@ class HoldableSwipeHandler private constructor(builder: Builder) :
                 currentViewHolder?.let {
                     if (getViewHolderTag(it)) {
                         swipedBackgroundHolder.run {
-                            drawHoldingBackground(c, it, scopedX.toInt(), isLeftToRight)
+                            drawHoldingBackground(c, it, scopedX.toInt(), isRightToLeft)
                         }
                     }
                 }

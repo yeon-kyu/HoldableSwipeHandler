@@ -40,19 +40,19 @@ class SwipedBackgroundHolder(context: Context) {
         return firstIcon.bounds.contains(x, y)
     }
 
-    fun drawHoldingBackground(canvas: Canvas, viewHolder: RecyclerView.ViewHolder, x: Int, isLeftToRight: Boolean) {
+    fun drawHoldingBackground(canvas: Canvas, viewHolder: RecyclerView.ViewHolder, x: Int, isRightToLeft: Boolean) {
         val itemView = viewHolder.itemView
 
         /** holding 되는 background 그린다 */
-        drawBackground(canvas, itemView, x, isLeftToRight)
+        drawBackground(canvas, itemView, x, isRightToLeft)
 
         /** holding 되는 background 에서 버튼의 위치를 계산하고 그린다 */
-        drawFirstItem(canvas, itemView, isLeftToRight)
+        drawFirstItem(canvas, itemView, isRightToLeft)
     }
 
-    private fun drawBackground(canvas: Canvas, itemView: View, x: Int, isLeftToRight: Boolean) {
+    private fun drawBackground(canvas: Canvas, itemView: View, x: Int, isRightToLeft: Boolean) {
         background.color = backgroundColor
-        if (isLeftToRight) {
+        if (isRightToLeft) {
             background.setBounds(itemView.right + x , itemView.top, itemView.right, itemView.bottom)
         } else {
             background.setBounds(0, itemView.top, x, itemView.bottom)
@@ -60,20 +60,20 @@ class SwipedBackgroundHolder(context: Context) {
         background.draw(canvas)
     }
 
-    private fun drawFirstItem(canvas: Canvas, itemView: View, isLeftToRight: Boolean) {
+    private fun drawFirstItem(canvas: Canvas, itemView: View, isRightToLeft: Boolean) {
         val itemHeight = itemView.bottom - itemView.top
 
         /** holding 되는 background 에서 버튼의 위치를 계산한다 */
         val firstIconTop = itemView.top + (itemHeight - intrinsicHeight) / 2
         val firstIconBottom = firstIconTop + intrinsicHeight
 
-        val firstIconLeft = if (isLeftToRight) {
+        val firstIconLeft = if (isRightToLeft) {
             itemView.right - firstItemSideMargin - intrinsicWidth
         } else {
             firstItemSideMargin
         }
 
-        val firstIconRight = if (isLeftToRight) {
+        val firstIconRight = if (isRightToLeft) {
             itemView.right - firstItemSideMargin
         } else {
             firstIconLeft + intrinsicWidth
