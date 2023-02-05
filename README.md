@@ -48,6 +48,10 @@ HoldableSwipeHandler.Builder(requireContext())
 ```
 
 ## Version Updates
+### v.1.2.1
+  - 왼쪽 -> 오른쪽 스와이프도 가능하도록 변경
+    - setDirectionAsLeftToRight() 파라미터에 false를 넣어서 적용 가능 (default값 : true)
+
 ### v.1.2.0
   - 라이브러리를 Builder Pattern으로 리팩토링
     - 기존의 기능들은 이전 방식(자바빈즈 패턴)으로도 사용 가능하나 권장하지 않음
