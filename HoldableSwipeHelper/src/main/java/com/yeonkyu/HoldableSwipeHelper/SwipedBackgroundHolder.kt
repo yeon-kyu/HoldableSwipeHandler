@@ -40,30 +40,44 @@ class SwipedBackgroundHolder(context: Context) {
         return firstIcon.bounds.contains(x, y)
     }
 
-    fun drawHoldingBackground(canvas: Canvas, viewHolder: RecyclerView.ViewHolder, x: Int) {
+    fun drawHoldingBackground(canvas: Canvas, viewHolder: RecyclerView.ViewHolder, x: Int, isLeftToRight: Boolean) {
         val itemView = viewHolder.itemView
 
         /** holding 되는 background 그린다 */
-        drawBackground(canvas, itemView, x)
+        drawBackground(canvas, itemView, x, isLeftToRight)
 
         /** holding 되는 background 에서 버튼의 위치를 계산하고 그린다 */
-        drawFirstItem(canvas, itemView)
+        drawFirstItem(canvas, itemView, isLeftToRight)
     }
 
-    private fun drawBackground(canvas: Canvas, itemView: View, x: Int) {
+    private fun drawBackground(canvas: Canvas, itemView: View, x: Int, isLeftToRight: Boolean) {
         background.color = backgroundColor
-        background.setBounds(itemView.right + x , itemView.top, itemView.right, itemView.bottom)
+        if (isLeftToRight) {
+            background.setBounds(itemView.right + x , itemView.top, itemView.right, itemView.bottom)
+        } else {
+            background.setBounds(0, itemView.top, x, itemView.bottom)
+        }
         background.draw(canvas)
     }
 
-    private fun drawFirstItem(canvas: Canvas, itemView: View) {
+    private fun drawFirstItem(canvas: Canvas, itemView: View, isLeftToRight: Boolean) {
         val itemHeight = itemView.bottom - itemView.top
 
         /** holding 되는 background 에서 버튼의 위치를 계산한다 */
         val firstIconTop = itemView.top + (itemHeight - intrinsicHeight) / 2
-        val firstIconLeft = itemView.right - firstItemSideMargin - intrinsicWidth
-        val firstIconRight = itemView.right - firstItemSideMargin
         val firstIconBottom = firstIconTop + intrinsicHeight
+
+        val firstIconLeft = if (isLeftToRight) {
+            itemView.right - firstItemSideMargin - intrinsicWidth
+        } else {
+            firstItemSideMargin
+        }
+
+        val firstIconRight = if (isLeftToRight) {
+            itemView.right - firstItemSideMargin
+        } else {
+            firstIconLeft + intrinsicWidth
+        }
 
         /** holding 되는 background 에서 버튼을 그린다. */
         firstIcon.setBounds(firstIconLeft, firstIconTop, firstIconRight, firstIconBottom)
