@@ -47,7 +47,7 @@ HoldableSwipeHandler.Builder(requireContext())
     .build()
 ```
 
-### 라이브러리 제작 및 배포 후기
+### 라이브러리 제작 및 배포 후기 블로그
 - https://yk-coding-letter.tistory.com/28
 
 ## Version Updates
