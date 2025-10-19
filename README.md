@@ -47,6 +47,9 @@ HoldableSwipeHandler.Builder(requireContext())
     .build()
 ```
 
+### 라이브러리 제작 및 배포 후기
+- https://yk-coding-letter.tistory.com/28
+
 ## Version Updates
 ### v.1.2.2
   - 왼쪽 -> 오른쪽 스와이프도 가능하도록 변경
